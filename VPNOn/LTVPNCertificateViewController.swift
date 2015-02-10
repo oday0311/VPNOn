@@ -40,7 +40,7 @@ class LTVPNCertificateViewController: UITableViewController, UITextFieldDelegate
 
     var downloading: Bool = false {
         didSet {
-            self.downloadCell.textLabel!.text = self.downloading ? kDownloadingText : kDownloadText
+            Optional(self.downloadCell.textLabel)!.text = self.downloading ? kDownloadingText : kDownloadText
             self.downloadCell.disabled = self.downloading
         }
     }
@@ -132,7 +132,7 @@ class LTVPNCertificateViewController: UITableViewController, UITextFieldDelegate
                 response, data, error in
                 dispatch_async(dispatch_get_main_queue(), {
                     if let err = error {
-                        self.certificateSummaryCell.textLabel!.text = error.localizedDescription
+                        Optional(self.certificateSummaryCell.textLabel)!.text = error.localizedDescription
                     } else {
                         self.certificateData = data
                     }
@@ -149,10 +149,10 @@ class LTVPNCertificateViewController: UITableViewController, UITextFieldDelegate
             let bytesCount = bytesFormatter.stringFromByteCount(Int64(data.length))
             let certificateFormat = NSLocalizedString("Certificate downloaded (%s)", comment: "Certificate - Status")
             let certificateText = String(format: certificateFormat, bytesCount)
-            certificateSummaryCell.textLabel!.text = certificateText
+            Optional(certificateSummaryCell.textLabel)!.text = certificateText
         } else {
             let defaultCertificateStatus = NSLocalizedString("Certificate will be downloaded and stored in Keychain", comment: "Certificate - Default status")
-            certificateSummaryCell.textLabel!.text = defaultCertificateStatus
+            Optional(certificateSummaryCell.textLabel)!.text = defaultCertificateStatus
         }
     }
     

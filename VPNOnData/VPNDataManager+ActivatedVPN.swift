@@ -16,7 +16,10 @@ extension VPNDataManager
             if VPNManager.sharedManager().isActivatedVPNIDDeprecated {
                 let vpns = allVPN()
                 for vpn in vpns {
-                    if let shortID = vpn.objectID.URIRepresentation().lastPathComponent {
+                    var url:NSURL = vpn.objectID.URIRepresentation()
+                    var temp:String = url.lastPathComponent
+                    let optionalIdx = Optional(temp)
+                    if let shortID = optionalIdx {
                         if shortID == VPNManager.sharedManager().activatedVPNID {
                             VPNManager.sharedManager().activatedVPNID = vpn.ID
                         }
